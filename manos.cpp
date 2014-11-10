@@ -27,8 +27,11 @@ void numeroVotos(int numero)
        waitKey(0);
 }
 
-void HandDetection(VideoCapture cap,CascadeClassifier detector)
+int main() 
 {
+VideoCapture cap;
+CascadeClassifier detector;
+
     if(!detector.load("/usr/local/Cellar/opencv/2.4.9/share/OpenCV/haarcascades/Hand.Cascade.1.xml"))
 		cout << "No se puede abrir clasificador." << endl;
     if(!cap.open(0))
