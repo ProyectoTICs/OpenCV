@@ -1,0 +1,2 @@
+/home/crepu/S02A14/TICs/bgslibrary/example_linux/CMakeFiles/FrameDifferenceTest.dir
+/home/crepu/S02A14/TICs/bgslibrary/example_linux/CMakeFiles/bgs.dir

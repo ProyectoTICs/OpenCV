@@ -1,0 +1,3 @@
+/home/crepu/S02A14/TICs/bgslibrary/CMakeFiles/bgs.dir
+/home/crepu/S02A14/TICs/bgslibrary/CMakeFiles/bgs_bin.dir
+/home/crepu/S02A14/TICs/bgslibrary/CMakeFiles/bgs_demo.dir
