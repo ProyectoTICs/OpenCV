@@ -2,7 +2,7 @@
 /***Para mas informacion visita: http://acodigo.blogspot.com/2014/03/reconocimiento-facial.html
 ****Autor: Carmelo Marin A**/
 
-#include "opencv2/opencv.hpp"
+#include <opencv2/opencv.hpp>
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
@@ -19,7 +19,7 @@ VideoCapture capture;
 
 float EYE_SX = 0.12f;
 float EYE_SY = 0.17f;
-float EYE_SW = 0.37f;
+float EYE_SW = 0.36f;
 float EYE_SH = 0.36f;
 
 double DESIRED_LEFT_EYE_Y = 0.14;
@@ -81,7 +81,7 @@ void CropFace(Mat& face, Mat& warped, Rect leftEye, Rect rightEye)
 	Point right = Point(rightEye.x + rightEye.width/2, rightEye.y + rightEye.height/2);
 	Point2f eyesCenter = Point2f( (left.x + right.x) * 0.5f, (left.y + right.y) * 0.5f );
 
-	// Get the angle between the 2 eyes.
+	// Obtiene el angunlo entre los 2 ojos.
 	double dy = (right.y - left.y);
 	double dx = (right.x - left.x);
 	double len = sqrt(dx*dx + dy*dy);
@@ -148,13 +148,6 @@ bool Init()
 		return false;
 	}
 
-	if(!profileFaceDetector.load("/usr/local/Cellar/opencv/2.4.9/share/OpenCV/haarcascades/haarcascade_profileface.xml"))
-	{
-		cout << "No se encuentra el archivo haarcascade_profileface.xml" << endl;
-		return false;
-	}
-	
-
 	if(!lEyeDetector.load("/usr/local/Cellar/opencv/2.4.9/share/OpenCV/haarcascades/haarcascade_eye_tree_eyeglasses.xml"))
 	{
 		cout << "No se encuentra el archivo haarcascade_eye_tree_eyeglasses.xml" << endl;
@@ -171,20 +164,7 @@ bool Init()
 }
 
 
-/*
-void SaveVect(std::vector<cv::Mat> &rostros){
 
-	int j = 0;
-	for (std::vector<cv::Mat>::iterator i = rostros.begin(); i != rostros.end(); ++i)
-	{
-		string nombre = "imagen_" + string(j) + ".jpg";
-		imwrite(nombre.c_str(),*i);
-		j++;
-	}
-}
-
-
-*/
 
 
 int main()
@@ -195,15 +175,15 @@ int main()
 	vector<int> ids;
 	map<int , string> names;
 
-	bool entrenado = false;
-	bool agregarRostro = false;
-	bool entrenar = false;
+	bool entrenado = true;
+	bool agregarRostro = true;
+	bool entrenar = true;
 	int identificador = 0, capCount = 0;
-
+/*
 	string msg1 = "Reconocimiento Facial \n\n\t[E] Iniciar Entrenamiento \n\t[ESC] Salir\n";
 	string msg2 = "Reconocimiento Facial \n\n\t[A] Capturar Rostro \n\t[T] Finalizar Entrenamiento \n\t[ESC] Salir\n";
 	cout << msg1;
-
+*/
 	bool correct = Init();
 
 	while (correct)
@@ -213,7 +193,7 @@ int main()
 
 		capture >> frame;
 
-		//Reducir el tamaño de la imagen para mejor rendimiento
+		//Reducir el tamaÃ±o de la imagen para mejor rendimiento
 		float scale = frame.cols / (float) REDUCED_SIZE;
 
 		if (frame.cols > REDUCED_SIZE) {
@@ -252,6 +232,7 @@ int main()
 				}
 
 				//entrenar el modelo con los rostros capturados
+				/*
 				if(entrenar && rostros.size() >= 1)
 				{
 					model->update(rostros, ids);
@@ -266,8 +247,9 @@ int main()
 					identificador += 1;
 					capCount = 0;
 
-					cout << msg1;
+					//cout << msg1;
 				}
+				*/
 			}
 
 			if(identificador >= 1)
@@ -285,18 +267,18 @@ int main()
 
 				if(id >= 0)
 				{
-					string msg = names[id] + " : " + to_string((int)confidence);
+					//string msg = names[id] + " : " + to_string((int)confidence);
 
-					DrawMarker(frame, face, msg , 20);
+					DrawMarker(frame, face, "cara" , 20);
 				} 
-				else DrawMarker(frame, face, "???", 20);
+				else DrawMarker(frame, face, "cara", 20);
 			}
-			else DrawMarker(frame, face, "???", 20);
+			else DrawMarker(frame, face, "cara", 20);
 		}
 
 		imshow("Reconocimiento de rostros", frame);
 
-
+/*
 		switch (waitKey(100))
 		{
 		case 'T':
@@ -316,10 +298,9 @@ int main()
 		case 27:
 			return 0;
 		}
-
+*/
 	}
 
-	//SaveVect(rostros);
 
 	system("pause");
 
